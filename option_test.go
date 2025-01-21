@@ -44,10 +44,6 @@ type fakeTracer struct {
 	name string
 }
 
-func (fakeTracer) tracer() {
-
-}
-
 func (fakeTracer) Start(ctx context.Context, spanName string, opts ...trace.SpanStartOption) (context.Context, trace.Span) {
 	return ctx, nil
 }
