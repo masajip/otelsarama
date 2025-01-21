@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-version: "3.7"
 services:
   zoo:
     image: zookeeper:3.4.9
@@ -45,8 +44,8 @@ services:
 
   kafka-producer:
     build:
-      dockerfile: $PWD/producer/Dockerfile
-      context: ../../../../../..
+      dockerfile: ./example/producer/Dockerfile
+      context: ../
     command:
       - "/bin/sh"
       - "-c"
@@ -59,8 +58,8 @@ services:
       - example
   kafka-consumer:
     build:
-      dockerfile: $PWD/consumer/Dockerfile
-      context: ../../../../../..
+      dockerfile: ./example/consumer/Dockerfile
+      context: ../
     command:
       - "/bin/sh"
       - "-c"

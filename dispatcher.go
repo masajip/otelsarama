@@ -22,7 +22,7 @@ import (
 	"github.com/IBM/sarama"
 
 	"go.opentelemetry.io/otel/attribute"
-	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.27.0"
 	"go.opentelemetry.io/otel/trace"
 )
 
@@ -61,12 +61,11 @@ func (w *consumerMessagesDispatcherWrapper) Run() {
 
 		// Create a span.
 		attrs := []attribute.KeyValue{
-			semconv.MessagingSystem("kafka"),
-			semconv.MessagingDestinationKindTopic,
+			semconv.MessagingSystemKafka,
 			semconv.MessagingDestinationName(msg.Topic),
-			semconv.MessagingOperationReceive,
+			semconv.MessagingOperationTypeReceive,
 			semconv.MessagingMessageID(strconv.FormatInt(msg.Offset, 10)),
-			semconv.MessagingKafkaSourcePartition(int(msg.Partition)),
+			semconv.MessagingDestinationPartitionID(strconv.Itoa(int(msg.Partition))),
 		}
 		opts := []trace.SpanStartOption{
 			trace.WithAttributes(attrs...),

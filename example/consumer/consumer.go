@@ -27,7 +27,7 @@ import (
 	"github.com/IBM/sarama"
 
 	"go.opentelemetry.io/otel"
-	semconv "go.opentelemetry.io/otel/semconv/v1.17.0"
+	semconv "go.opentelemetry.io/otel/semconv/v1.27.0"
 	"go.opentelemetry.io/otel/trace"
 
 	"github.com/dnwe/otelsarama"
@@ -93,7 +93,7 @@ func printMessage(msg *sarama.ConsumerMessage) {
 
 	tr := otel.Tracer("consumer")
 	_, span := tr.Start(ctx, "consume message", trace.WithAttributes(
-		semconv.MessagingOperationProcess,
+		semconv.MessagingOperationTypeProcess,
 	))
 	defer span.End()
 

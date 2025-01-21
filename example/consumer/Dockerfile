@@ -13,9 +13,8 @@
 # limitations under the License.
 FROM golang:alpine AS base
 COPY . /src/
-WORKDIR /src/instrumentation/github.com/IBM/sarama/otelsarama/example
+WORKDIR /src/example
 
 FROM base AS kafka-consumer
 RUN go install ./consumer/consumer.go
 CMD ["/go/bin/consumer"]
-

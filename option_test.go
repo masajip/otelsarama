@@ -23,11 +23,14 @@ import (
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/trace"
+	"go.opentelemetry.io/otel/trace/embedded"
 )
 
 // We need a fake tracer provider to ensure the one passed in options is the one used afterwards.
 // In order to avoid adding the SDK as a dependency, we use this mock.
-type fakeTracerProvider struct{}
+type fakeTracerProvider struct {
+	embedded.TracerProvider
+}
 
 func (fakeTracerProvider) Tracer(name string, opts ...trace.TracerOption) trace.Tracer {
 	return fakeTracer{
@@ -36,7 +39,13 @@ func (fakeTracerProvider) Tracer(name string, opts ...trace.TracerOption) trace.
 }
 
 type fakeTracer struct {
+	embedded.Tracer
+
 	name string
+}
+
+func (fakeTracer) tracer() {
+
 }
 
 func (fakeTracer) Start(ctx context.Context, spanName string, opts ...trace.SpanStartOption) (context.Context, trace.Span) {
